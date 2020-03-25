@@ -1,10 +1,10 @@
 package main
 
 import (
-	"wildberries_work/pkg/facade/car"
-	"wildberries_work/pkg/facade/riding"
-	"wildberries_work/pkg/facade/headlights"
-	"wildberries_work/pkg/facade/engine"
+	"wildberries-work/pkg/facade/car"
+	"wildberries-work/pkg/facade/engine"
+	"wildberries-work/pkg/facade/headlights"
+	"wildberries-work/pkg/facade/riding"
 )
 
 func main() {
