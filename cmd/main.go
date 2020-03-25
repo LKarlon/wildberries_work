@@ -1,18 +1,21 @@
 package main
 
 import (
-	"wildberries_work/pkg/facade/get_in_the_car"
+	"wildberries_work/pkg/facade/car"
+	"wildberries_work/pkg/facade/riding"
+	"wildberries_work/pkg/facade/headlights"
+	"wildberries_work/pkg/facade/engine"
 )
 
 func main() {
-	car := get_in_the_car.GetInTheCar()
-	engine := car.GetEngine()
-	headlights := car.GetHeadLights()
-	riding := car.GetRiding()
-	engine.EngineOn()
-	headlights.TurnOnLamps()
-	riding.Start()
-	riding.Stop()
-	headlights.TurnOffLamps()
-	engine.RngineOff()
+	//инициализируем различные интерфесы автомобиля
+	e := engine.NewEngine()
+	r := riding.NewRiding()
+	h := headlights.NewHeadlights()
+	//компонуем из них машину
+	c := car.NewRider(h, e, r)
+	//вызываем функцию поездки, передав в нее время суток
+	//(morning, day, evening, night) В случе некорректного ввода,
+	//функция сообщит нам об этом
+	c.Ride("night")
 }

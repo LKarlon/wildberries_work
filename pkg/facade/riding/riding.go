@@ -1,16 +1,29 @@
 package riding
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type Riding struct {
+//интерфейс для движения
+type Riding interface {
+	Start()
+	Stop()
 }
 
-func (r *Riding) Start() {
-	fmt.Println("машина движется")
+type riding struct {
+	status bool
 }
 
-func (r *Riding) Stop() {
-	fmt.Println("мы остановились")
+func (r *riding) Start() {
+	r.status = true
+	fmt.Println("Машина движется")
+}
+
+func (r *riding) Stop() {
+	r.status = false
+	fmt.Println("Машина остановлена")
+}
+
+func NewRiding() Riding {
+	return &riding{
+		status: false,
+	}
 }

@@ -1,18 +1,25 @@
 package headlights
 
-import (
-	"fmt"
-)
-
-type Headlights struct {
+// интерфейс для фар
+type Headlights interface {
+	TurnOnLamps()
+	TurnOffLamps()
 }
 
-func (р *Headlights) TurnOnLamps() {
-		fmt.Println("фары включены")
+type headlights struct {
+	status bool
 }
 
-func (h *Headlights) TurnOffLamps() {
-	fmt.Println("фары выключены")
+func (h *headlights) TurnOnLamps() {
+	h.status = true
 }
 
+func (h *headlights) TurnOffLamps() {
+	h.status = false
+}
 
+func NewHeadlights() Headlights {
+	return &headlights{
+		status: false,
+	}
+}

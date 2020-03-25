@@ -1,4 +1,8 @@
-package get_in_the_car
+package car
+
+import (
+	"fmt"
+)
 
 type headlights interface {
 	TurnOnLamps()
@@ -16,7 +20,7 @@ type riding interface {
 }
 
 type Rider interface {
-	Ride(timesOfDay string) string
+	Ride(timesOfDay string)
 }
 
 type rider struct {
@@ -25,44 +29,43 @@ type rider struct {
 	riding     riding
 }
 
-func (r *rider) Ride(timesOfDay string) (status string){
+// Эта функция в зависимости от переданного аргумента (время суток) определяет - следует ли
+// включать фары. Затем осуществляется поездка на автомобиле.
+func (r *rider) Ride(timesOfDay string) {
+	var headlightsStatus bool
 	switch timesOfDay {
 	case "morning":
 		r.headlights.TurnOffLamps()
+		headlightsStatus = false
 	case "day":
 		r.headlights.TurnOffLamps()
+		headlightsStatus = false
 	case "evening":
 		r.headlights.TurnOnLamps()
+		headlightsStatus = true
 	case "night":
 		r.headlights.TurnOnLamps()
-
+		headlightsStatus = true
+	default:
+		fmt.Println("Неправильно указано время суток")
+		return
 	}
-}
-type road struct {
-	headlights: &headlights.headlights{
-},
-	engine:     &engine.Engine{
-},
-	riding:     &riding.Riding{
-},
-}
-
-func (r *sportCar) GetHeadLights() headlights.headlights {
-	return *r.headlights
-}
-
-func (r *sportCar) GetEngine() engine.Engine {
-	return *r.engine
-}
-
-func (r *sportCar) GetRiding() riding.Riding {
-	return *r.riding
-}
-
-func GetInTheCar() *sportCar {
-	return &sportCar{
-		headlights: &headlights.headlights{},
-		engine:     &engine.Engine{},
-		riding:     &riding.Riding{},
+	if headlightsStatus {
+		fmt.Println("Темно и мы включаем фары")
+	} else {
+		fmt.Println("Нет необходимости включать фары")
 	}
+	r.engine.EngineOn()
+	r.riding.Start()
+	r.riding.Stop()
+	r.engine.EngineOff()
+}
+
+func NewRider(headlights headlights, engine engine, riding riding) Rider {
+	return &rider{
+		headlights: headlights,
+		engine:     engine,
+		riding:     riding,
+	}
+
 }
