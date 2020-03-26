@@ -1,14 +1,18 @@
 @startuml
 [Car]
 package "car's entities" {
-[engine]
 [headlights]
-[movement]
+[engine]
+[wheels]
+[battery]
 }
-Car-->engine
-Car-->movement
-movement->engine
 Car-->headlights
+Car-->engine
+Car-->battery
+battery -down->headlights
+battery->engine
+engine->wheels
+
 
 
 
