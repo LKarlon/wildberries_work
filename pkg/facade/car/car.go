@@ -5,67 +5,54 @@ import (
 )
 
 type headlights interface {
-	TurnOnLamps()
-	TurnOffLamps()
+	LampsOn(int, int)(int, error)
+	LampsOff()
 }
 
 type engine interface {
-	EngineOn()
-	EngineOff()
+	On(int, int) (int, error)
+	Off()
+	WheelsStart()
+	WheelsStop()
 }
 
-type riding interface {
-	Start()
-	Stop()
+type battery interface {
+	EngineOn(int) (int, error)
+	HeadlightsOn(int) (int, error)
 }
 
-type Rider interface {
-	Ride(timesOfDay string)
+type Car interface {
+	Ride(tripLength int) error
 }
 
-type rider struct {
+type car struct {
 	headlights headlights
 	engine     engine
-	riding     riding
+	battery    battery
 }
 
-// Эта функция в зависимости от переданного аргумента (время суток) определяет - следует ли
-// включать фары. Затем осуществляется поездка на автомобиле.
-func (r *rider) Ride(timesOfDay string) {
-	var headlightsStatus bool
-	switch timesOfDay {
-	case "morning":
-		r.headlights.TurnOffLamps()
-		headlightsStatus = false
-	case "day":
-		r.headlights.TurnOffLamps()
-		headlightsStatus = false
-	case "evening":
-		r.headlights.TurnOnLamps()
-		headlightsStatus = true
-	case "night":
-		r.headlights.TurnOnLamps()
-		headlightsStatus = true
-	default:
-		fmt.Println("Неправильно указано время суток")
-		return
+func (c *car) Ride(tripLength int) error {
+	_, err := c.battery.HeadlightsOn(tripLength)
+	if err != nil {
+		return err
 	}
-	if headlightsStatus {
-		fmt.Println("Темно и мы включаем фары")
-	} else {
-		fmt.Println("Нет необходимости включать фары")
+	charge, err := c.battery.EngineOn(tripLength)
+	if err != nil {
+		return err
 	}
-	r.engine.EngineOn()
-	r.riding.Start()
-	r.riding.Stop()
-	r.engine.EngineOff()
+	c.engine.WheelsStart()
+	c.engine.WheelsStop()
+	c.engine.Off()
+	c.headlights.LampsOff()
+	fmt.Println("Осталось заряда: ", charge)
+	return err
 }
 
-func NewRider(headlights headlights, engine engine, riding riding) Rider {
-	return &rider{
+func NewCar(headlights headlights, engine engine, battery battery) Car {
+	return &car{
 		headlights: headlights,
 		engine:     engine,
-		riding:     riding,
+		battery:    battery,
 	}
 
 }

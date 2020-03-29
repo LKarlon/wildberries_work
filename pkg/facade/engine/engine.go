@@ -4,32 +4,47 @@ import (
 	"fmt"
 )
 
-//интерфей для двигателя
-type Engine interface {
-	EngineOn()
-	EngineOff()
+type wheels interface {
+	Start()
+	Stop()
 }
 
-// я хотел бы изменять статус двигателя (вкл, выкл),
-// чтобы в зависимости от него машина могла/не могла двигаться
-// но как это сделать, если реализация через интерфесы позволяет
-// передавать методы, но не поля?
+type Engine interface {
+	On(int, int) (int, error)
+	Off()
+	WheelsStart()
+	WheelsStop()
+}
+
 type engine struct {
 	status bool
+	wheels wheels
 }
 
-func (e *engine) EngineOn() {
-	e.status = true
+func (e *engine) On(chargeCalc int, tripLength int) (int, error) {
+	spending := tripLength * 20
+	if chargeCalc-spending <= 0 {
+		err := fmt.Errorf("заряда не достаточно для поездки")
+		return 0, err
+	}
 	fmt.Println("Двигатель включен")
+	return chargeCalc - spending, nil
 }
 
-func (e *engine) EngineOff() {
-	e.status = false
+func (e *engine) Off() {
 	fmt.Println("Двигатель выключен")
 }
 
-func NewEngine() Engine {
+func (e*engine) WheelsStart(){
+	e.wheels.Start()
+}
+
+func(e *engine) WheelsStop(){
+	e.wheels.Stop()
+}
+
+func NewEngine(wheels wheels) Engine {
 	return &engine{
-		status: false,
+		wheels: wheels,
 	}
 }
