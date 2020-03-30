@@ -12,7 +12,7 @@ type wheels interface {
 type Engine interface {
 	On(int, int) (int, error)
 	Off()
-	WheelsStart()
+	WheelsStart() error
 	WheelsStop()
 }
 
@@ -27,16 +27,22 @@ func (e *engine) On(chargeCalc int, tripLength int) (int, error) {
 		err := fmt.Errorf("заряда не достаточно для поездки")
 		return 0, err
 	}
+	e.status = true
 	fmt.Println("Двигатель включен")
 	return chargeCalc - spending, nil
 }
 
 func (e *engine) Off() {
+	e.status = false
 	fmt.Println("Двигатель выключен")
 }
 
-func (e*engine) WheelsStart(){
+func (e*engine) WheelsStart() error{
+	if e.status == false{
+		return fmt.Errorf("необходимо включить двигатель")
+	}
 	e.wheels.Start()
+	return nil
 }
 
 func(e *engine) WheelsStop(){
