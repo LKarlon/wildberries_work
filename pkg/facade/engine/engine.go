@@ -40,15 +40,15 @@ func (e *engine) Off() {
 }
 
 // Wheels start only when the engine is running
-func (e*engine) WheelsStart() error{
-	if e.status == false{
+func (e *engine) WheelsStart() error {
+	if e.status == false {
 		return fmt.Errorf("необходимо включить двигатель")
 	}
 	e.wheels.Start()
 	return nil
 }
 
-func(e *engine) WheelsStop(){
+func (e *engine) WheelsStop() {
 	e.wheels.Stop()
 }
 

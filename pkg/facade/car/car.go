@@ -5,7 +5,7 @@ import (
 )
 
 type headlights interface {
-	LampsOn(int, int)(int, error)
+	LampsOn(int, int) (int, error)
 	LampsOff()
 }
 
@@ -34,7 +34,7 @@ type car struct {
 // Function simulates an electric car ride.
 // Returns the remaining amount of charge.
 func (c *car) Ride(tripLength int) (int, error) {
-	if tripLength < 0{
+	if tripLength < 0 {
 		return 0, fmt.Errorf("продолжительность поездки не может быть отрицательной")
 	}
 	_, err := c.battery.HeadlightsOn(tripLength)
