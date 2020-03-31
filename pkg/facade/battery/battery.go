@@ -15,6 +15,7 @@ type Battery interface {
 	HeadlightsOn(int) (int, error)
 }
 
+// The battery starts up the engine and headlights. It stores the charge level.
 type battery struct {
 	engine     engine
 	headlights headlights

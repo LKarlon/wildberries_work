@@ -31,6 +31,8 @@ type car struct {
 	battery    battery
 }
 
+// Function simulates an electric car ride.
+// Returns the remaining amount of charge.
 func (c *car) Ride(tripLength int) (int, error) {
 	if tripLength < 0{
 		return 0, fmt.Errorf("продолжительность поездки не может быть отрицательной")
@@ -48,7 +50,7 @@ func (c *car) Ride(tripLength int) (int, error) {
 	c.engine.Off()
 	c.headlights.LampsOff()
 	fmt.Println("Осталось заряда: ", charge)
-	return 0, err
+	return charge, err
 }
 
 func NewCar(headlights headlights, engine engine, battery battery) Car {

@@ -2,7 +2,6 @@ package headlights
 
 import "fmt"
 
-// интерфейс для фар
 type Headlights interface {
 	LampsOn(int, int)(int, error)
 	LampsOff()
