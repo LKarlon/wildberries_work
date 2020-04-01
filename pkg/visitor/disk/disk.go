@@ -1,7 +1,7 @@
 package disk
 
 type cnc interface {
-	SharpenDisk(di *disk) string
+	SharpenDisk(Disk) string
 }
 
 type Disk interface {
@@ -24,10 +24,11 @@ func (d *disk) VolumeCalc() int {
 	return (d.radius + 2) * 2 * d.depth
 }
 
-func NewDisk(startVolume int, radius int, depth int) Disk{
+func NewDisk(cnc cnc, startVolume int, radius int, depth int) Disk {
 	return &disk{
+		cnc:         cnc,
 		startVolume: startVolume,
-		radius: radius,
-		depth: depth,
+		radius:      radius,
+		depth:       depth,
 	}
 }

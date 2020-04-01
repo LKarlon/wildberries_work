@@ -1,7 +1,7 @@
 package shaft
 
 type cnc interface {
-	SharpenShaft(sh *shaft) string
+	SharpenShaft(Shaft) (res string)
 }
 
 type Shaft interface {
@@ -26,7 +26,7 @@ func (s *shaft) VolumeCalc() int {
 
 func NewShaft(cnc cnc, startVolume int, radius int, length int) Shaft {
 	return &shaft{
-		cnc:         nil,
+		cnc:         cnc,
 		startVolume: startVolume,
 		length:      radius,
 		radius:      length,

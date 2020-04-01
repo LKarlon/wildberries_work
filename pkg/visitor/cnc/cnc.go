@@ -6,8 +6,8 @@ import(
 )
 
 type CNC interface {
-	SharpenShaft(shaft.Shaft) string
-	SharpenDisk(disk.Disk) string
+	SharpenShaft(shaft.Shaft) (res string)
+	SharpenDisk(disk.Disk) (res string)
 }
 
 type cnc struct {
@@ -20,6 +20,7 @@ func (c *cnc) SharpenShaft(shaft shaft.Shaft) (res string) {
 
 func (c *cnc) SharpenDisk(disk disk.Disk) (res string) {
 	res = "disk ready"
+	return
 }
 
 func NewCNC() CNC {
