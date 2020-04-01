@@ -9,6 +9,7 @@ type wheels interface {
 	Stop()
 }
 
+// Engine...
 type Engine interface {
 	On(int, int) (int, error)
 	Off()
@@ -21,7 +22,7 @@ type engine struct {
 	wheels wheels
 }
 
-// The engine start function takes charge amount and travel time.
+// On function takes charge amount and travel time.
 // Returns the remaining amount of charge, or reports an error.
 func (e *engine) On(chargeCalc int, tripLength int) (int, error) {
 	spending := tripLength * 20
@@ -39,19 +40,20 @@ func (e *engine) Off() {
 	fmt.Println("Двигатель выключен")
 }
 
-// Wheels start only when the engine is running
-func (e*engine) WheelsStart() error{
-	if e.status == false{
+// WheelsStart start only when the engine is running
+func (e *engine) WheelsStart() error {
+	if e.status == false {
 		return fmt.Errorf("необходимо включить двигатель")
 	}
 	e.wheels.Start()
 	return nil
 }
 
-func(e *engine) WheelsStop(){
+func (e *engine) WheelsStop() {
 	e.wheels.Stop()
 }
 
+// NewEngine...
 func NewEngine(wheels wheels) Engine {
 	return &engine{
 		wheels: wheels,

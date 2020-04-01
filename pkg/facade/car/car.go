@@ -5,7 +5,7 @@ import (
 )
 
 type headlights interface {
-	LampsOn(int, int)(int, error)
+	LampsOn(int, int) (int, error)
 	LampsOff()
 }
 
@@ -21,6 +21,7 @@ type battery interface {
 	HeadlightsOn(int) (int, error)
 }
 
+// Car...
 type Car interface {
 	Ride(tripLength int) (int, error)
 }
@@ -31,10 +32,10 @@ type car struct {
 	battery    battery
 }
 
-// Function simulates an electric car ride.
-// Returns the remaining amount of charge.
+// Ride takes the length of the trip.
+// Returns the remaining amount of charge.
 func (c *car) Ride(tripLength int) (int, error) {
-	if tripLength < 0{
+	if tripLength < 0 {
 		return 0, fmt.Errorf("продолжительность поездки не может быть отрицательной")
 	}
 	_, err := c.battery.HeadlightsOn(tripLength)
@@ -45,7 +46,10 @@ func (c *car) Ride(tripLength int) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	c.engine.WheelsStart()
+	err = c.engine.WheelsStart()
+	if err != nil {
+		return 0, err
+	}
 	c.engine.WheelsStop()
 	c.engine.Off()
 	c.headlights.LampsOff()
@@ -53,6 +57,7 @@ func (c *car) Ride(tripLength int) (int, error) {
 	return charge, err
 }
 
+// NewCar...
 func NewCar(headlights headlights, engine engine, battery battery) Car {
 	return &car{
 		headlights: headlights,

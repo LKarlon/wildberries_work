@@ -10,18 +10,19 @@ type headlights interface {
 	LampsOff()
 }
 
+// Battery starts up the engine and headlights.
 type Battery interface {
 	EngineOn(int) (int, error)
 	HeadlightsOn(int) (int, error)
 }
 
-// The battery starts up the engine and headlights. It stores the charge level.
 type battery struct {
 	engine     engine
 	headlights headlights
 	charge     int
 }
 
+// EngineOn starts up the engine if charge is enough
 func (b *battery) EngineOn(tripLength int) (int, error) {
 	balance, err := b.engine.On(b.charge, tripLength)
 	if err != nil {
@@ -31,6 +32,7 @@ func (b *battery) EngineOn(tripLength int) (int, error) {
 	return b.charge, nil
 }
 
+// HeadlightsOn starts up the engine if charge is enough
 func (b *battery) HeadlightsOn(tripLength int) (int, error) {
 	balance, err := b.headlights.LampsOn(b.charge, tripLength)
 	if err != nil {
@@ -40,6 +42,7 @@ func (b *battery) HeadlightsOn(tripLength int) (int, error) {
 	return b.charge, nil
 }
 
+// NewBattery...
 func NewBattery(charge int, engine engine, headlights headlights) Battery {
 	return &battery{
 		charge:     charge,
