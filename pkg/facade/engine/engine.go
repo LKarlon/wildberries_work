@@ -21,7 +21,7 @@ type engine struct {
 	wheels wheels
 }
 
-// The engine start function takes charge amount and travel time.
+// Function On takes charge amount and travel time.
 // Returns the remaining amount of charge, or reports an error.
 func (e *engine) On(chargeCalc int, tripLength int) (int, error) {
 	spending := tripLength * 20

@@ -31,7 +31,7 @@ type car struct {
 	battery    battery
 }
 
-// Function simulates an electric car ride.
+// Ride takes the duration of the trip in hours.
 // Returns the remaining amount of charge.
 func (c *car) Ride(tripLength int) (int, error) {
 	if tripLength < 0 {
@@ -45,7 +45,10 @@ func (c *car) Ride(tripLength int) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	c.engine.WheelsStart()
+	err = c.engine.WheelsStart()
+	if err != nil {
+		return 0, err
+	}
 	c.engine.WheelsStop()
 	c.engine.Off()
 	c.headlights.LampsOff()
