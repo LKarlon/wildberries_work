@@ -42,7 +42,7 @@ func (b *battery) HeadlightsOn(tripLength int) (int, error) {
 	return b.charge, nil
 }
 
-// NewBattery...
+// NewBattery ...
 func NewBattery(charge int, engine engine, headlights headlights) Battery {
 	return &battery{
 		charge:     charge,

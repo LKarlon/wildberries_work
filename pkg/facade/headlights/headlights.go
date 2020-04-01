@@ -2,7 +2,7 @@ package headlights
 
 import "fmt"
 
-// Headlights...
+// Headlights ...
 type Headlights interface {
 	LampsOn(int, int) (int, error)
 	LampsOff()
@@ -33,7 +33,7 @@ func (h *headlights) LampsOff() {
 	fmt.Println("Фары выключены")
 }
 
-// NewHeadlights...
+// NewHeadlights ...
 func NewHeadlights() Headlights {
 	return &headlights{}
 }

@@ -9,7 +9,7 @@ type wheels interface {
 	Stop()
 }
 
-// Engine...
+// Engine ...
 type Engine interface {
 	On(int, int) (int, error)
 	Off()
@@ -53,7 +53,7 @@ func (e *engine) WheelsStop() {
 	e.wheels.Stop()
 }
 
-// NewEngine...
+// NewEngine ...
 func NewEngine(wheels wheels) Engine {
 	return &engine{
 		wheels: wheels,

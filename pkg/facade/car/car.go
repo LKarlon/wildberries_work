@@ -21,7 +21,7 @@ type battery interface {
 	HeadlightsOn(int) (int, error)
 }
 
-// Car...
+// Car ...
 type Car interface {
 	Ride(tripLength int) (int, error)
 }
@@ -57,7 +57,7 @@ func (c *car) Ride(tripLength int) (int, error) {
 	return charge, err
 }
 
-// NewCar...
+// NewCar ...
 func NewCar(headlights headlights, engine engine, battery battery) Car {
 	return &car{
 		headlights: headlights,
