@@ -1,0 +1,17 @@
+@startuml
+Car -> battery: "Turn on headlights"
+headlights <- battery: "Give some charge"
+headlights --> battery: "Charge spending"
+Car -> battery: "Turn on engine"
+battery -> engine: "Give some charge"
+engine --> battery: "Charge spending"
+Car -> engine: "Start!"
+engine -> wheels: "Start!"
+Car -> engine: "Stop"
+engine -> wheels: "Stop"
+
+Car -> headlights: "Turn off"
+
+
+
+@enduml

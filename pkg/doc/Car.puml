@@ -1,0 +1,29 @@
+@startuml
+[Car]
+package "car's entities" {
+[headlights]
+[engine]
+[wheels]
+[battery]
+}
+Car-->headlights
+Car-->engine
+Car-->battery
+battery -down->headlights
+battery->engine
+engine->wheels
+
+
+
+
+@enduml
+package "Some Group" {
+HTTP - [First Component]
+[Another Component]
+}
+
+package "Other Groups" {
+FTP - [Second Component]
+
+[First Component] --> FTP
+}
